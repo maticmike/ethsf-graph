@@ -9,6 +9,8 @@ type Fund @entity {
   Tokens: [Tokens!]!
   RedemptionNfts: [RedemptionNft!]!
   BonusTokens: [BonusToken!]!
+  PercentagePerNft: BigInt!
+  VestingDate: BigInt!
 }
 
 # id: Address-ID
@@ -24,6 +26,7 @@ type Token @entity {
 # id: Addresss-ID
 type RedemptionNft @entity {
   id: ID!
+  DeadlineForTask: BigInt!
 }
 
 #ERC20s Available in fund
