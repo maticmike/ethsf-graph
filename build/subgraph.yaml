@@ -30,3 +30,30 @@ dataSources:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: SoulFund/SoulFund.wasm
+  - kind: ethereum
+    name: SoulFund1
+    network: rinkeby
+    source:
+      address: "0x710552d47d780fbe58a7b11dc75629e7257f95fb"
+      abi: SoulFund
+      startBlock: 11177008
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Fund
+        - Token
+        - Account
+        - Merit
+      abis:
+        - name: SoulFund
+          file: SoulFund1/abis/SoulFund.json
+      eventHandlers:
+        - event: NewWhitelistedNFT(address)
+          handler: handleNewWhitelistedNFT
+        - event: VestedFundsClaimedEarly(uint256,uint256,address,uint256)
+          handler: handleVestedFundsClaimedEarly
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: SoulFund/SoulFund.wasm
