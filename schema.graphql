@@ -1,6 +1,40 @@
-type ExampleEntity @entity {
+
+# id: Address
+type Fund @entity {
   id: ID!
-  count: BigInt!
-  previousAdmin: Bytes! # address
-  newAdmin: Bytes! # address
+  uniqueId: BigInt!
+  address: Bytes!
+  beneficiary: [Beneficiary!]!
+  grantor: Grantor!
+  Tokens: [Tokens!]!
+  RedemptionNfts: [RedemptionNft!]!
+  BonusTokens: [BonusToken!]!
+}
+
+# id: Address-ID
+type Token @entity {
+  id: ID!
+  uniqueId: BigInt!
+  address: Bytes!
+  redemptionNfts: [RedemptionNfts!]!
+  beneficiary: Beneficiary!
+  grantor: Grantor!
+}
+
+# id: Addresss-ID
+type RedemptionNft @entity {
+  id: ID!
+}
+
+#ERC20s Available in fund
+type BonusToken @entity {
+  id: ID!
+}
+
+type Beneficiary @entity {
+  id: ID!
+}
+
+type Grantor @entity {
+  id: ID!
 }
