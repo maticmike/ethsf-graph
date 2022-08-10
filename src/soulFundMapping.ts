@@ -1,4 +1,4 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, log } from "@graphprotocol/graph-ts";
 import {
   Transfer,
   NewWhitelistedNFT,
@@ -7,6 +7,8 @@ import {
 import { Account, Token } from "../generated/schema";
 
 export function handleTransfer(event: Transfer): void {
+  
+  log.warning("Transfer hash: {}", [event.transaction.hash.toHex()]);
 
   // assume soulbound
   const id = event.params.tokenId;
@@ -22,14 +24,9 @@ export function handleTransfer(event: Transfer): void {
 
 }
 
-export function handleNewWhitelistedNFT(event: NewWhitelistedNFT): void {
+export function handleNewWhitelistedNFT(event: NewWhitelistedNFT): void {}
 
-}
-
-export function handleVestedFundsClaimedEarly(event: VestedFundsClaimedEarly): void {
-
-
-}
+export function handleVestedFundsClaimedEarly(event: VestedFundsClaimedEarly): void {}
 
 export function loadOrCreateAccount(address: Address): Account {
   let account = Account.load(address.toHexString());
