@@ -1,7 +1,7 @@
 specVersion: 0.0.4
 description: Subgraph for SoulFund
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: SoulFund
@@ -9,7 +9,7 @@ dataSources:
     source:
       address: "0x8398abeCB06e662E7Bb3d8294a680553Bf944D33"
       abi: SoulFund
-      startBlock: 11176818 
+      startBlock: 11176818
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -21,7 +21,7 @@ dataSources:
         - Merit
       abis:
         - name: SoulFund
-          file: ./abis/SoulFund.json
+          file: SoulFund/abis/SoulFund.json
       eventHandlers:
         - event: NewWhitelistedNFT(address)
           handler: handleNewWhitelistedNFT
@@ -29,15 +29,14 @@ dataSources:
           handler: handleVestedFundsClaimedEarly
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/soulFundMapping.ts
-
+      file: SoulFund/SoulFund.wasm
   - kind: ethereum
     name: SoulFund1
     network: rinkeby
     source:
       address: "0x710552d47d780fbe58a7b11dc75629e7257f95fb"
       abi: SoulFund
-      startBlock: 11177008  
+      startBlock: 11177008
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -49,7 +48,7 @@ dataSources:
         - Merit
       abis:
         - name: SoulFund
-          file: ./abis/SoulFund.json
+          file: SoulFund1/abis/SoulFund.json
       eventHandlers:
         - event: NewWhitelistedNFT(address)
           handler: handleNewWhitelistedNFT
@@ -57,4 +56,4 @@ dataSources:
           handler: handleVestedFundsClaimedEarly
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/soulFundMapping.ts
+      file: SoulFund/SoulFund.wasm

@@ -1,9 +1,11 @@
 {
-  "name": "SoulFund",
+  "name": "soulfund-subgraph",
   "license": "UNLICENSED",
   "scripts": {
+    "auth": "graph auth --studio be13fbc1389434ecff58329c4fe4260c",
     "codegen": "graph codegen",
     "build": "graph build",
+    "deploy_studio": "graph deploy --studio soulfund",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ ehsueh/SoulFund",
     "create-local": "graph create --node http://localhost:8020/ ehsueh/SoulFund",
     "remove-local": "graph remove --node http://localhost:8020/ ehsueh/SoulFund",
