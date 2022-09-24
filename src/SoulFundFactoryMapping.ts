@@ -1,6 +1,6 @@
 import { Address, log } from '@graphprotocol/graph-ts';
 import { NewSoulFundTokenDeployed } from '../generated/SoulFundFactory/SoulFundFactory';
-import { Fund } from '../generated/schema';
+import { SoulFund } from '../generated/templates';
 import { loadOrCreateFund } from './factories/FundFactory';
 
 export function handleNewSoulFundTokenDeployed(event: NewSoulFundTokenDeployed): void {
@@ -13,5 +13,5 @@ export function handleNewSoulFundTokenDeployed(event: NewSoulFundTokenDeployed):
     fund.address = event.params.tokenAddress;
     fund.beneficiary = event.params.beneficiary;
     fund.save();
-    Fund.create(id);
+    SoulFund.create(id);
 }

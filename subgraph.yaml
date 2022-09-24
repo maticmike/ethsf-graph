@@ -26,6 +26,34 @@ dataSources:
         - event: NewSoulFundTokenDeployed(indexed address,indexed address,uint256,uint256)
           handler: handleNewSoulFundTokenDeployed
       file: ./src/SoulFundFactoryMapping.ts
+templates: 
+  - kind: ethereum/contract
+    name: SoulFund
+    network: goerli
+    source:
+      abi: SoulFund
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Fund
+        - Token
+        - Account
+        - MeritToken
+      abis:
+        - name: SoulFund
+          file: ./abis/SoulFund.json
+      eventHandlers:
+        - event: NewWhitelistedNFT(address)
+          handler: handleNewWhitelistedNFT
+        - event: VestedFundsClaimedEarly(uint256,uint256,address,uint256)
+          handler: handleVestedFundsClaimedEarly
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/SoulFundMapping.ts
+
+
   # - kind: ethereum
   #   name: SoulFund
   #   network: goerli
