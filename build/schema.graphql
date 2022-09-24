@@ -6,7 +6,7 @@ type Fund @entity {
   beneficiary: [Account!]!
   grantor: Account!
   tokens: [Token!]
-  merits: [Merit!]
+  merits: [MeritToken!]
   VestingDate: BigInt!
 }
 
@@ -25,7 +25,8 @@ type Account @entity {
   granted: [Token!] @derivedFrom(field: "grantor")
 }
 
-type Merit @entity {
+# id: NFTAddress
+type MeritToken @entity {
   id: ID!
   address: Bytes!
   tokenId: BigInt!

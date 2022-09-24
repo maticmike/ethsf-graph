@@ -2,14 +2,14 @@
   "name": "soulfund-subgraph",
   "license": "UNLICENSED",
   "scripts": {
-    "auth": "graph auth --studio be13fbc1389434ecff58329c4fe4260c",
+    "auth": "graph auth --studio a7c6089d946ab3ca5d93134dbfaaa288",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy_studio": "graph deploy --studio soulfund",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ ehsueh/SoulFund",
-    "create-local": "graph create --node http://localhost:8020/ ehsueh/SoulFund",
-    "remove-local": "graph remove --node http://localhost:8020/ ehsueh/SoulFund",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ehsueh/SoulFund",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ benjamin852/SoulFund",
+    "create-local": "graph create --node http://localhost:8020/ benjamin852/SoulFund",
+    "remove-local": "graph remove --node http://localhost:8020/ benjamin852/SoulFund",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 benjamin852/SoulFund",
     "test": "graph test"
   },
   "dependencies": {
