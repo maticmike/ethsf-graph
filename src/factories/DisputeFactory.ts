@@ -15,6 +15,7 @@ export function loadOrCreateDispute(disputeId: BigInt): Dispute {
         dispute.defendent = ZERO_ADDRESS;
         dispute.associatedProject = ZERO_ADDRESS;
         dispute.verdict = false;
+        dispute.approved = false;
     }
     dispute.save();
     return dispute as Dispute;

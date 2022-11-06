@@ -28,10 +28,11 @@ type Jury @entity {
 type Dispute @entity {
     id: ID!
     address: Bytes!
-    juryMembers: [JuryMember!]!
+    jury: [Jury!]!
     ongoing: Bool!
-    plaintiff: Bytes!
-    defendent: Bytes!
+    proposer: Bytes!
+    deadline: BigInt!
     associatedProject: Bytes! #soulfund/ defi games
     verdict: Bool!
+    approved: Bool! #approved by 2 jurors
 }

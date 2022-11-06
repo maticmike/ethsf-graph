@@ -26,7 +26,7 @@ export function handleNewJuryPoolMember(event: NewJuryPoolMember): void {
     juryMember.save();
 }
 
-export function handleJurryDutyCompleted(event: JuryDutyCompleted): void {
+export function handleJuryDutyCompleted(event: JuryDutyCompleted): void {
     log.info('New jury duty completed event: {}', [event.transaction.hash.toHex()]);
     const id = event.params.juryId;
 
@@ -49,10 +49,39 @@ export function handleJurryDutyCompleted(event: JuryDutyCompleted): void {
 
 export function handleVoted(event: Voted): void {
     log.info('New jury member voted event: {}', [event.transaction.hash.toHex()]);
-    const id = event.param.jurorId;
+    const id = event.params.jurorId;
     let juryMember = loadOrCreateJuryMember(id);
     if (juryMember != null) {
         juryMember.numberOfTimesVoted = juryMember.numberOfTimesVoted.plus(BigInt.fromI32(1));
         juryMember.vote = event.params.decision;
     }
+    juryMember.save();
+}
+
+export function handleNewDisputeProposal(event: NewDisputeProposal): void {
+    log.info('New dispute proposal event: {}', [event.transaction.hash.toHex()]);
+    const id = event.params.proposedId;
+    let disputeProposal = loadOrCreateDispute(id);
+    if (disputeProposal != null) {
+        disputeProposal.deadline = event.params.deadline;
+
+        disputeProposal.proposer = event.params.proposer;
+        disputeProposal.approved = event.params.isApproved;
+    }
+    disputeProposal.save();
+}
+
+export function handleProposalPassed(event: ProposalPassed): void {
+    log.info('New proposal passed event: {}', [event.transaction.hash.toHex()]);
+    const id = event.params.proposalId;
+    let disputeProposal = loadOrCreateDispute(id);
+    if (disputeProposal != null) {
+        disputeProposal.ongoing = true;
+        disputeProposal.approved = true;
+        let jury = loadOrCreateJury(event.params.juryId);
+        // TODO review if jury can be assigned before proposal submitted
+        disputeProposal.jury = jury;
+        jury.save();
+    }
+    disputeProposal.save();
 }
