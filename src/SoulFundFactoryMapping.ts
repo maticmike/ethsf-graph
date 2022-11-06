@@ -45,5 +45,14 @@ export function handleJurryDutyCompleted(event: JuryDutyCompleted): void {
         juryMember.reputationScore = juryMember.reputationScore + 1;
     }
     juryMember.save();
+
     let jury = loadOrCreateJury(event.params.)
 }
+
+
+//NOTE how to do an array?
+// EXample
+// let currentArray = jurryMembers.jurry 
+// currentArray.push(event.params.incomingItemToAdd)
+// jurryMember.jurries = currentArray
+
