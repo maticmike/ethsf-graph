@@ -1,6 +1,15 @@
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
-import { NewSoulFundTokenDeployed } from '../generated/SoulFundFactory/SoulFundFactory';
-import { SoulFund } from '../generated/templates';
+import {
+    NewLiveJury,
+    NewJuryPoolMember,
+    JuryDutyCompleted,
+    Voted,
+    NewDisputeProposal,
+    HandleNewDispute,
+    DisputeDeadlinePostponed,
+    DisputeResolved,
+} from '../generated/Jury/Jury';
+import { JuryMember, Jury, Dispute } from '../generated/templates';
 import { loadOrCreateDispute } from './factories/DisputeFactory';
 import { loadOrCreateJury } from './factories/JuryFactory';
 import { loadOrCreateJuryMember } from './factories/JuryMember';
@@ -71,7 +80,7 @@ export function handleNewDisputeProposal(event: NewDisputeProposal): void {
     disputeProposal.save();
 }
 
-export function handleNewDispute(event: handleNewDispute): void {
+export function handleNewDispute(event: HandleNewDispute): void {
     log.info('New dispute created event: {}', [event.transaction.hash.toHex()]);
     const id = event.params.disputeId;
     let dispute = loadOrCreateDispute(id);

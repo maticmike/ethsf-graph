@@ -23,6 +23,14 @@ type Jury @entity {
     ongoing: Bool!
 }
 
+# general purpose jury per dapp/protocol
+type ProtocolJury @entity {
+    id: ID!
+    dappAddress: Bytes
+    swapInterval: BigInt!
+    jurySize: BigInt!
+}
+
 # unique dispute id
 # a unique dispute at a specific moment for a specific jurry
 type Dispute @entity {

@@ -17,14 +17,13 @@ dataSources:
           entities:
               - JuryMember
               - Juries
-              - Dispute
           abis:
-              - name: SoulFundFactory
-                file: ./abis/SoulFundFactory.json
+              - name: JuryFactory
+                file: ./abis/JuryFactory.json
           eventHandlers:
-              - event: NewSoulFundTokenDeployed(indexed address,indexed address,uint256,uint256)
-                handler: handleNewSoulFundTokenDeployed
-          file: ./src/SoulFundFactoryMapping.ts
+              - event: JuryDeployed(address indexed,uint96,uint8)
+                handler: handleJuryDeployed
+          file: ./src/JuryFactoryMapping.ts
 templates:
     - kind: ethereum/contract
       name: Jury
@@ -66,4 +65,4 @@ templates:
                 handler: handleDisputeDeadlinePostponed
               - event: DisputeResolved(uint256 indexed,bool)
                 handler: handleDisputeResolved
-          file: ./src/Jury.ts
+          file: ./src/JuryMapping.ts
