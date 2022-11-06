@@ -1,57 +1,58 @@
 specVersion: 0.0.4
 description: Subgraph for SoulFund
 schema:
-  file: ./schema.graphql
+    file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: JuryFactory
-    network: goerli
-    source:
-      # address: "0xA2cd357Ccbc4f069CA00c97a1DE80d8A5eA351F1"
-      abi: JuryFactory
-      startBlock: 7900445 
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - JuryMember
-        - Juries
-        - Dispute
-      abis:
-        - name: SoulFundFactory
-          file: ./abis/SoulFundFactory.json
-      eventHandlers:
-        - event: NewSoulFundTokenDeployed(indexed address,indexed address,uint256,uint256)
-          handler: handleNewSoulFundTokenDeployed
-      file: ./src/SoulFundFactoryMapping.ts
-templates: 
-  - kind: ethereum/contract
-    name: Jury
-    network: goerli
-    source:
-      abi: Jury
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - JuryMember
-        - Juries
-        - Dispute
-      abis:
-        - name: Jury
-          file: ./abis/Jury.json
-      eventHandlers:
-        - event: NewLiveJury(uint256,address[] indexed)
-          handler: handleNewLiveJury
-        - event: NewJuryPoolMember(address)
-          handler: handleNewJuryPoolMember
-        - event: RemovedJuryMember(address)
-          handler: handleRemovedJuryMember
-        - event: JuryDutyCompleted(uint256 indexed)
-          handler: handleJuryDutyCompleted
-        - event: Voted(address indexed,uint256,bool)
-          handler: handleVoted
-      file: ./src/Jury.ts
-
+    - kind: ethereum
+      name: JuryFactory
+      network: goerli
+      source:
+          # address: "0xA2cd357Ccbc4f069CA00c97a1DE80d8A5eA351F1"
+          abi: JuryFactory
+          startBlock: 7900445
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - JuryMember
+              - Juries
+              - Dispute
+          abis:
+              - name: SoulFundFactory
+                file: ./abis/SoulFundFactory.json
+          eventHandlers:
+              - event: NewSoulFundTokenDeployed(indexed address,indexed address,uint256,uint256)
+                handler: handleNewSoulFundTokenDeployed
+          file: ./src/SoulFundFactoryMapping.ts
+templates:
+    - kind: ethereum/contract
+      name: Jury
+      network: goerli
+      source:
+          abi: Jury
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - JuryMember
+              - Juries
+              - Dispute
+          abis:
+              - name: Jury
+                file: ./abis/Jury.json
+          eventHandlers:
+              - event: NewLiveJury(uint256,uint256[],uint256)
+                handler: handleNewLiveJury
+              - event: NewJuryPoolMember(address indexed,uint256 indexed)
+                handler: handleNewJuryPoolMember
+              # - event: RemovedJuryMember(address)
+              #   handler: handleRemovedJuryMember
+              - event: JuryDutyAdded(uint256 indexed,uint256[] indexed)
+                handler: handleJuryDutyAdded
+              - event: JuryDutyCompleted(uint256 indexed)
+                handler: handleJuryDutyCompleted
+              - event: Voted(uint256 indexed,uint256 indexed,bool)
+                handler: handleVoted
+          file: ./src/Jury.ts

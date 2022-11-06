@@ -1,14 +1,15 @@
-# id: Address
+# id: uint256 jury indicy
 # all jury members across the pool
 type JuryMember @entity {
     id: ID!
-    jurries: [Jury!]!
+    juries: [Jury!]!
     address: Bytes!
     disputes: [Dispute!]!
     disputesParticipated: BigInt!
     reputationScore: BigInt!
     onCall: Bool!
     vote: Bool!
+    numberOfTimesVoted: BigInt!
 }
 
 # unique jury id
