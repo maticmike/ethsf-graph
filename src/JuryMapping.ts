@@ -5,11 +5,10 @@ import {
     JuryDutyCompleted,
     Voted,
     NewDisputeProposal,
-    HandleNewDispute,
+    NewDispute,
     DisputeDeadlinePostponed,
     DisputeResolved,
-} from '../generated/Jury/Jury';
-import { JuryMember, Jury, Dispute } from '../generated/templates';
+} from '../generated/templates/Jury/Jury';
 import { loadOrCreateDispute } from './factories/DisputeFactory';
 import { loadOrCreateJury } from './factories/JuryFactory';
 import { loadOrCreateJuryMember } from './factories/JuryMember';
@@ -18,7 +17,7 @@ export function handleNewLiveJury(event: NewLiveJury): void {
     log.info('New live jury event: {}', [event.transaction.hash.toHex()]);
 
     const id = event.params.juryId;
-    let jury = loadOrCreateJury(id);
+    let jury = loadOrCreateJury(id.toString());
     if (jury != null) {
         jury.juryMembers = event.params.juryMembers;
         jury.onCallStartDate = event.block.timestamp;
@@ -80,7 +79,7 @@ export function handleNewDisputeProposal(event: NewDisputeProposal): void {
     disputeProposal.save();
 }
 
-export function handleNewDispute(event: HandleNewDispute): void {
+export function handleNewDispute(event: NewDispute): void {
     log.info('New dispute created event: {}', [event.transaction.hash.toHex()]);
     const id = event.params.disputeId;
     let dispute = loadOrCreateDispute(id);

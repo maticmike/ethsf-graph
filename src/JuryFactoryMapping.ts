@@ -1,8 +1,8 @@
 import { Address, log } from '@graphprotocol/graph-ts';
-import { JuryDeployed } from '../generated/JuryFactory/JuryFactory';
+import { JuryDepoyed } from '../generated/JuryFactory/JuryFactory';
 import { ProtocolJury } from '../generated/schema';
 
-export function handleJuryDeployed(event: JuryDeployed): void {
+export function handleJuryDeployed(event: JuryDepoyed): void {
     log.warning('Jury Deployed hash: {}', [event.transaction.hash.toHex()]);
 
     // assume soulbound

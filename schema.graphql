@@ -7,8 +7,8 @@ type JuryMember @entity {
     disputes: [Dispute!]!
     disputesParticipated: BigInt!
     reputationScore: BigInt!
-    onCall: Bool!
-    vote: Bool!
+    onCall: Boolean!
+    vote: Boolean!
     numberOfTimesVoted: BigInt!
 }
 
@@ -20,7 +20,7 @@ type Jury @entity {
     disputesHandled: [Dispute!]!
     onCallStartDate: BigInt!
     onCallEndDate: BigInt!
-    ongoing: Bool!
+    ongoing: Boolean!
 }
 
 # general purpose jury per dapp/protocol
@@ -37,10 +37,10 @@ type Dispute @entity {
     id: ID!
     address: Bytes!
     jury: [Jury!]!
-    ongoing: Bool!
+    ongoing: Boolean!
     proposer: Bytes!
     deadline: BigInt!
     associatedProject: Bytes! #soulfund/ defi games
-    verdict: Bool!
-    approved: Bool! #approved by 2 jurors
+    verdict: Boolean!
+    approved: Boolean! #approved by 2 jurors
 }

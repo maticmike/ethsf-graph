@@ -5,11 +5,11 @@ schema:
 dataSources:
     - kind: ethereum
       name: JuryFactory
-      network: goerli
+      network: mumbai
       source:
-          # address: "0xA2cd357Ccbc4f069CA00c97a1DE80d8A5eA351F1"
+          address: '0x0a2eF62347727B72dadfc2686ACF200127E504c5'
           abi: JuryFactory
-          startBlock: 7900445
+          startBlock: 29010861
       mapping:
           kind: ethereum/events
           apiVersion: 0.0.6
@@ -21,13 +21,13 @@ dataSources:
               - name: JuryFactory
                 file: ./abis/JuryFactory.json
           eventHandlers:
-              - event: JuryDeployed(address indexed,uint96,uint8)
+              - event: JuryDepoyed(indexed address,uint96,uint8)
                 handler: handleJuryDeployed
           file: ./src/JuryFactoryMapping.ts
 templates:
     - kind: ethereum/contract
       name: Jury
-      network: goerli
+      network: mumbai
       source:
           abi: Jury
       mapping:
@@ -44,25 +44,25 @@ templates:
           eventHandlers:
               - event: NewLiveJury(uint256,uint256[],uint256)
                 handler: handleNewLiveJury
-              - event: NewJuryPoolMember(address indexed,uint256 indexed)
+              - event: NewJuryPoolMember(indexed address,indexed uint256)
                 handler: handleNewJuryPoolMember
               # - event: RemovedJuryMember(address)
               #   handler: handleRemovedJuryMember
-              - event: JuryDutyAdded(uint256 indexed,uint256[] indexed)
+              - event: JuryDutyAdded(indexed uint256,indexed uint256[])
                 handler: handleJuryDutyAdded
-              - event: JuryDutyCompleted(uint256 indexed)
+              - event: JuryDutyCompleted(indexed uint256)
                 handler: handleJuryDutyCompleted
-              - event: Voted(uint256 indexed,uint256 indexed,bool)
+              - event: Voted(indexed uint256,indexed uint256,bool)
                 handler: handleVoted
               #dispute events
-              - event: NewDisputeProposal(address indexed,uint256 indexed,uint256 indexed,uint256)
+              - event: NewDisputeProposal(indexed address,indexed uint256,indexed uint256,uint256)
                 handler: handleNewDisputeProposal
               # - event: ProposalPassed(uint256 indexed,uint256 indexed)
               #   handler: handleProposalPassed
-              - event: NewDispute(uint256 indexed,uint256 indexed,uint256)
+              - event: NewDispute(indexed uint256,indexed uint256,uint256)
                 handler: handleNewDispute
-              - event: DisputeDeadlinePostponed(uint256 indexed,uint256)
+              - event: DisputeDeadlinePostponed(indexed uint256,uint256)
                 handler: handleDisputeDeadlinePostponed
-              - event: DisputeResolved(uint256 indexed,bool)
+              - event: DisputeResolved(indexed uint256,bool)
                 handler: handleDisputeResolved
           file: ./src/JuryMapping.ts

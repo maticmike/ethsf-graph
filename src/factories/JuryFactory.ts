@@ -1,11 +1,11 @@
 import { BigInt, Address } from '@graphprotocol/graph-ts';
-import { Jury } from '../generated/schema';
+import { Jury } from '../../generated/schema';
 
-export function loadOrCreateJury(juryId: BigInt): Jury {
+export function loadOrCreateJury(juryId: string): Jury {
     let jury = Jury.load(juryId);
 
     if (jury == null) {
-        jury = new jury(juryId);
+        jury = new Jury(juryId);
         jury.id = juryId;
         jury.juryMembers = new Array<string>();
         jury.disputesHandled = new Array<string>();
