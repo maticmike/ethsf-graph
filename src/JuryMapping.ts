@@ -71,17 +71,52 @@ export function handleNewDisputeProposal(event: NewDisputeProposal): void {
     disputeProposal.save();
 }
 
-export function handleProposalPassed(event: ProposalPassed): void {
-    log.info('New proposal passed event: {}', [event.transaction.hash.toHex()]);
-    const id = event.params.proposalId;
-    let disputeProposal = loadOrCreateDispute(id);
-    if (disputeProposal != null) {
-        disputeProposal.ongoing = true;
-        disputeProposal.approved = true;
+export function handleNewDispute(event: handleNewDispute): void {
+    log.info('New dispute created event: {}', [event.transaction.hash.toHex()]);
+    const id = event.params.disputeId;
+    let dispute = loadOrCreateDispute(id);
+    if (dispute != null) {
+        dispute.ongoing = true;
+        dispute.approved = true;
+        dispute.deadline = event.params.deadline;
         let jury = loadOrCreateJury(event.params.juryId);
-        // TODO review if jury can be assigned before proposal submitted
-        disputeProposal.jury = jury;
+        let juryDisputesHandled = jury.disputesHandled;
+        juryDisputesHandled.push(dispute);
+        jury.disputesHandled = juryDisputesHandled;
+        dispute.jury = jury;
         jury.save();
+
+        let juryMembers = jury.juryMembers;
+        for (let i = 0; i < juryMembers.length; i++) {
+            let juryMemberDisputes = juryMembers[i].disputes;
+            juryMemberDisputes.disputes.push(dispute);
+            juryMembers[i].disputes = juryMemberDisputes;
+        }
     }
-    disputeProposal.save();
+    dispute.save();
+}
+
+export function handleDisputeDeadlinePostponed(event: DisputeDeadlinePostponed): void {
+    log.info('Dispute deadline postponed event: {}', [event.transaction.hash.toHex()]);
+    const id = event.params.disputeId;
+    let dispute = loadOrCreateDispute(id);
+    if (dispute != null) {
+        dispute.deadline = event.params.newDeadline;
+    }
+    dispute.save();
+}
+
+export function handleDisputeResolved(event: DisputeResolved): void {
+    log.info('Dispute resolved event: {}', [event.transaction.hash.toHex()]);
+    const id = event.params.disputeId;
+    let dispute = loadOrCreateDispute(id);
+    if (dispute != null) {
+        dispute.verdict = event.params.verdict;
+        dispute.ongoing = false;
+        let jury = dispute.jury;
+        let juryMembers = jury.juryMembers;
+        for (let i = 0; i < juryMembers.length; i++) {
+            juryMembers[i].disputesParticipated = juryMembers[i].disputesParticipated.add(BigInt.fromI32(1));
+        }
+    }
 }

@@ -58,8 +58,8 @@ templates:
               #dispute events
               - event: NewDisputeProposal(address indexed,uint256 indexed,uint256 indexed,uint256)
                 handler: handleNewDisputeProposal
-              - event: ProposalPassed(uint256 indexed,uint256 indexed)
-                handler: handleProposalPassed
+              # - event: ProposalPassed(uint256 indexed,uint256 indexed)
+              #   handler: handleProposalPassed
               - event: NewDispute(uint256 indexed,uint256 indexed,uint256)
                 handler: handleNewDispute
               - event: DisputeDeadlinePostponed(uint256 indexed,uint256)
