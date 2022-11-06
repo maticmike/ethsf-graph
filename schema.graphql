@@ -1,34 +1,36 @@
-
 # id: Address
-type Fund @entity {
-  id: ID!
-  address: Bytes!
-  beneficiaries: [Account!]!
-  grantor: Account!
-  tokens: [Token!]
-  merits: [MeritToken!]
-  vestingDate: BigInt!
+# all jury members across the pool
+type JuryMember @entity {
+    id: ID!
+    jurries: [Jury!]!
+    address: Bytes!
+    disputes: [Dispute!]!
+    disputesParticipated: BigInt!
+    reputationScore: BigInt!
+    onCall: Bool!
+    vote: Bool!
 }
 
-# id: Address-ID
-type Token @entity {
-  id: ID!
-  fund: Bytes!
-  tokenURI: String
-  beneficiary: Account!
-  grantor: Account!
+# unique jury id
+# a specific jury on call at a specific moment
+type Jury @entity {
+    id: ID!
+    juryMembers: [JuryMember!]!
+    disputesHandled: [Dispute!]!
+    onCallStartDate: BigInt!
+    onCallEndDate: BigInt!
+    ongoing: Bool!
 }
 
-type Account @entity {
-  id: ID!
-  received: [Token!] @derivedFrom(field: "beneficiary")
-  granted: [Token!] @derivedFrom(field: "grantor")
-}
-
-# id: NFTAddress
-type MeritToken @entity {
-  id: ID!
-  address: Bytes!
-  tokenId: BigInt!
-  funds: [Fund!] @derivedFrom(field: "merits")
+# unique dispute id
+# a unique dispute at a specific moment for a specific jurry
+type Dispute @entity {
+    id: ID!
+    address: Bytes!
+    juryMembers: [JuryMember!]!
+    ongoing: Bool!
+    plaintiff: Bytes!
+    defendent: Bytes!
+    associatedProject: Bytes! #soulfund/ defi games
+    verdict: Bool!
 }

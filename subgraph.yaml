@@ -4,21 +4,20 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: SoulFundFactory
+    name: JuryFactory
     network: goerli
     source:
-      address: "0xA2cd357Ccbc4f069CA00c97a1DE80d8A5eA351F1"
-      abi: SoulFundFactory
-      startBlock: 11176818 
+      # address: "0xA2cd357Ccbc4f069CA00c97a1DE80d8A5eA351F1"
+      abi: JuryFactory
+      startBlock: 7900445 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Fund
-        - Token
-        - Account
-        - MeritToken
+        - JuryMember
+        - Juries
+        - Dispute
       abis:
         - name: SoulFundFactory
           file: ./abis/SoulFundFactory.json
@@ -28,84 +27,31 @@ dataSources:
       file: ./src/SoulFundFactoryMapping.ts
 templates: 
   - kind: ethereum/contract
-    name: SoulFund
+    name: Jury
     network: goerli
     source:
-      abi: SoulFund
+      abi: Jury
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Fund
-        - Token
-        - Account
-        - MeritToken
+        - JuryMember
+        - Juries
+        - Dispute
       abis:
-        - name: SoulFund
-          file: ./abis/SoulFund.json
+        - name: Jury
+          file: ./abis/Jury.json
       eventHandlers:
-        - event: NewWhitelistedNFT(address)
-          handler: handleNewWhitelistedNFT
-        - event: VestedFundsClaimedEarly(uint256,uint256,address,uint256)
-          handler: handleVestedFundsClaimedEarly
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/SoulFundMapping.ts
+        - event: NewLiveJury(uint256,address[] indexed)
+          handler: handleNewLiveJury
+        - event: NewJuryPoolMember(address)
+          handler: handleNewJuryPoolMember
+        - event: RemovedJuryMember(address)
+          handler: handleRemovedJuryMember
+        - event: JuryDutyCompleted(uint256 indexed)
+          handler: handleJuryDutyCompleted
+        - event: Voted(address indexed,uint256,bool)
+          handler: handleVoted
+      file: ./src/Jury.ts
 
-
-  # - kind: ethereum
-  #   name: SoulFund
-  #   network: goerli
-  #   source:
-  #     address: "0x1cd2dC4C58B6b707Fa4cCD5414eF2dD3C776A1f9"
-  #     abi: SoulFund
-  #     startBlock: 11176818 
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.6
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Fund
-  #       - Token
-  #       - Account
-  #       - MeritToken
-  #     abis:
-  #       - name: SoulFund
-  #         file: ./abis/SoulFund.json
-  #     eventHandlers:
-  #       - event: NewWhitelistedNFT(address)
-  #         handler: handleNewWhitelistedNFT
-  #       - event: VestedFundsClaimedEarly(uint256,uint256,address,uint256)
-  #         handler: handleVestedFundsClaimedEarly
-  #       - event: Transfer(indexed address,indexed address,indexed uint256)
-  #         handler: handleTransfer
-  #     file: ./src/SoulFundMapping.ts
-
-  # - kind: ethereum
-  #   name: SoulFund1
-  #   network: goerli
-  #   source:
-  #     address: "0x710552d47d780fbe58a7b11dc75629e7257f95fb"
-  #     abi: SoulFund
-  #     startBlock: 11177008  
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.6
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Fund
-  #       - Token
-  #       - Account
-  #       - MeritToken
-  #     abis:
-  #       - name: SoulFund
-  #         file: ./abis/SoulFund.json
-  #     eventHandlers:
-  #       - event: NewWhitelistedNFT(address)
-  #         handler: handleNewWhitelistedNFT
-  #       - event: VestedFundsClaimedEarly(uint256,uint256,address,uint256)
-  #         handler: handleVestedFundsClaimedEarly
-  #       - event: Transfer(indexed address,indexed address,indexed uint256)
-  #         handler: handleTransfer
-  #     file: ./src/SoulFundMapping.ts
