@@ -55,4 +55,15 @@ templates:
                 handler: handleJuryDutyCompleted
               - event: Voted(uint256 indexed,uint256 indexed,bool)
                 handler: handleVoted
+              #dispute events
+              - event: NewDisputeProposal(address indexed,uint256 indexed,uint256 indexed,uint256)
+                handler: handleNewDisputeProposal
+              - event: ProposalPassed(uint256 indexed,uint256 indexed)
+                handler: handleProposalPassed
+              - event: NewDispute(uint256 indexed,uint256 indexed,uint256)
+                handler: handleNewDispute
+              - event: DisputeDeadlinePostponed(uint256 indexed,uint256)
+                handler: handleDisputeDeadlinePostponed
+              - event: DisputeResolved(uint256 indexed,bool)
+                handler: handleDisputeResolved
           file: ./src/Jury.ts
